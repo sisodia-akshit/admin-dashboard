@@ -1,16 +1,81 @@
-# React + Vite
+# Admin Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive **Admin Dashboard** built using **React** to simulate a real-world admin panel experience.  
+This project focuses on frontend architecture, state management, protected routes, and responsive UI design.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+- Fake authentication using React Context API
+- Protected routes (Dashboard accessible only after login)
+- Responsive sidebar with hamburger menu for mobile devices
+- Dashboard summary cards
+- Data visualization using charts
+- Users management with search and pagination
+- Orders management with status filter
+- Order details displayed in modal
+- Mobile-friendly and clean UI
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- React Router DOM
+- Context API
+- Recharts
+- HTML & CSS
+- JavaScript (ES6)
+
+---
+
+## 📸 Screenshots
+
+![Login Page](screenshots/login.png)
+![Dashboard](screenshots/dashboard.png)
+![Users Page](screenshots/users.png)
+![Orders Page](screenshots/orders.png)
+
+---
+
+## 🌐 Live Demo
+
+👉 https://your-dashboard.netlify.app  
+*(Replace with your actual Netlify URL)*
+
+---
+
+## 📂 Project Structure
+
+src/
+├─ components/
+├─ pages/
+├─ context/
+├─ data/
+├─ styles/
+└─ App.jsx
+
+---
+
+## 📌 Notes
+
+- This project uses **static (mock) data** for demonstration purposes.
+- Authentication is simulated using localStorage.
+- Designed to demonstrate frontend concepts used in real admin dashboards.
+
+---
+
+## 👤 Author
+
+**Akshit Sisodiya**  
+MERN Stack Developer (Fresher)
+
+- GitHub: https://github.com/sisodia-akshit
+- LinkedIn: https://www.linkedin.com/in/akshit-sisodiya-6732602aa/
+
+---
+
+## ⭐ Feedback
+
+Suggestions and feedback are always welcome!
