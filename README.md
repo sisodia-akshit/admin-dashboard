@@ -41,8 +41,7 @@ This project focuses on frontend architecture, state management, protected route
 
 ## 🌐 Live Demo
 
-👉 https://your-dashboard.netlify.app  
-*(Replace with your actual Netlify URL)*
+👉 https://admin-dashboard-by-akshit.netlify.app/
 
 ---
 
