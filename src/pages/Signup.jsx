@@ -1,58 +1,66 @@
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "../context/AuthContext";
 import { NavLink, useNavigate } from "react-router-dom";
-import { loginUser } from "../services/loginUserApi";
+import { createUser } from "../services/postUsersApi";
 import { useState } from "react";
 
-const Login = () => {
+const Signup = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const loginMutation = useMutation({
-    mutationFn: loginUser,
+  const signupMutation = useMutation({
+    mutationFn: createUser,
     onSuccess: (data) => {
       login(data);
       navigate("/");
     },
   });
 
-  const handleLogin = (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
 
-    loginMutation.mutate({
+    signupMutation.mutate({
+      name,
       email,
       password,
+      role: "User",
     });
   };
 
   return (
     <div style={{ padding: "50px" }}>
-      <form onSubmit={handleLogin}>
-        <h2>Login</h2>
+      <form onSubmit={handleSignup}>
+        <h2>Signup</h2>
+
+        <input required placeholder="Name" onChange={e => setName(e.target.value)} />
+        <br /><br />
+
         <input required type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} />
         <br /><br />
 
         <input required type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
         <br /><br />
 
-        <button type="submit" disabled={loginMutation.isLoading}>
-          {loginMutation.isLoading ? "Logging up..." : "Login"}
+        <button type="submit" disabled={signupMutation.isLoading}>
+          {signupMutation.isLoading ? "Signing up..." : "Signup"}
         </button>
 
-        {loginMutation.error && (
-          <p style={{ color: "red" }}>{loginMutation.error.message}</p>
+        {signupMutation.error && (
+          <p style={{ color: "red" }}>{signupMutation.error.message}</p>
         )}
 
         <br /><br />
         <span>
-          Don't have an Account? <NavLink to={"/signup"}>Signup</NavLink>
+          Already have an account? <NavLink to="/login">Login</NavLink>
         </span>
       </form>
     </div>
   );
 };
 
-export default Login;
+
+export default Signup;

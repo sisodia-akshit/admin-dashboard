@@ -3,13 +3,15 @@ import Dashboard from "./pages/Dashboard";
 import Users from "./pages/Users";
 import Orders from "./pages/Orders";
 import Login from "./pages/Login";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
         <Route
           path="/"

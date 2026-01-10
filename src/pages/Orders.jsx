@@ -1,58 +1,119 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import ordersData from "../data/orders";
 import Modal from "../components/Modal";
+import { getOrders } from "../services/ordersApi";
+import DataTable from "../components/DataTable";
+import Pagination from "../components/Pagination";
+import Filter from "../components/Filter";
+import useQueryParams from "../hooks/useQueryParams";
+import { useQuery } from "@tanstack/react-query";
 
 const Orders = () => {
-  const [status, setStatus] = useState("All");
-  const [selectedOrder, setSelectedOrder] = useState(null);
+  const { getParam, setParams } = useQueryParams();
 
-  const filteredOrders =
-    status === "All"
-      ? ordersData
-      : ordersData.filter((o) => o.status === status);
+  const page = Number(getParam("page") || 1);
+  const status = getParam("status") || "All";
+  const sort = getParam("sort") || "";
+  const order = getParam("order") || "";
+
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const OrdersPerPage = 5
+
+  const {
+    data,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: [
+      "orders",
+      page,
+      status,
+      sort,
+      order,
+    ],
+    queryFn: ({ signal }) =>
+      getOrders({
+        page,
+        limit: OrdersPerPage,
+        status: status?.toLowerCase(),
+        sort,
+        order,
+        signal,
+      }),
+    keepPreviousData: true,
+  });
+
+  const orders = data?.data ?? [];
+  const total = data?.total ?? 0;
+  const totalPages = Math.ceil(total / OrdersPerPage);
+  
+  useEffect(() => {
+    if (page > totalPages && totalPages > 0) {
+      setParams({ page: 1 });
+    }
+  }, [page, totalPages, setParams]);
+
+  const onStatusChange = (e) => {
+    setParams({
+      status: e.target.value,
+      page: 1,
+    });
+  };
+
+  const onPageChange = (p) => {
+    setParams({ page: p });
+  };
+
+  const onSort = (config) => {
+    setParams({
+      sort: config?.key || "",
+      order: config?.direction || "",
+      page: 1,
+    });
+  };
+
 
   return (
     <Layout>
       <h1>Orders</h1>
-
-      <select
+      {error && <p style={{ color: "red" }}>{error.message}</p>}
+      <Filter
         value={status}
-        onChange={(e) => setStatus(e.target.value)}
-      >
-        <option>All</option>
-        <option>Pending</option>
-        <option>Delivered</option>
-      </select>
-
-      <div style={{ overflowX: "auto" }}>
-        <table width="100%" border="1" cellPadding="8">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Customer</th>
-              <th>Amount</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredOrders.map((o) => (
-              <tr key={o.id}>
-                <td>{o.id}</td>
-                <td>{o.customer}</td>
-                <td>₹{o.amount}</td>
-                <td>{o.status}</td>
-                <td>
-                  <button onClick={() => setSelectedOrder(o)}>
-                    View
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        options={["All", "Pending", "Delivered"]}
+        onChange={onStatusChange}
+      />
+      <div style={{ minHeight: "18px" }}>
+        {isLoading && <small>Loading orders...</small>}
       </div>
+      <DataTable
+        columns={[
+          { label: "ID", key: "id" },
+          { label: "Customer", key: "customer" },
+          { label: "Amount", key: "amount" },
+          { label: "Status", key: "status" },
+          { label: "Action", key: null },
+        ]}
+        data={orders}
+        sortConfig={
+          sort
+            ? { key: sort, direction: order }
+            : null
+        }
+        onSort={onSort}
+        renderRow={(o) => (
+          <tr key={o.id}>
+            <td>{o.id}</td>
+            <td>{o.customer}</td>
+            <td>₹{o.amount}</td>
+            <td>{o.status}</td>
+            <td>
+              <button onClick={() => setSelectedOrder(o)}>
+                View
+              </button>
+            </td>
+          </tr>
+        )}
+      />
 
       {selectedOrder && (
         <Modal onClose={() => setSelectedOrder(null)}>
@@ -63,6 +124,12 @@ const Orders = () => {
           <p>Status: {selectedOrder.status}</p>
         </Modal>
       )}
+
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
+      />
     </Layout>
   );
 };
