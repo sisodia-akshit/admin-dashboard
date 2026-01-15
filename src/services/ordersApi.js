@@ -1,18 +1,28 @@
-export const getOrders = async ({ status, page, limit, sort, order }) => {
+import API from "./api";
+
+export const getOrders = async ({
+  status,
+  page,
+  limit,
+  sort,
+  order,
+  signal,
+}) => {
   const params = new URLSearchParams({
-    _page: page,
-    _limit: limit,
-    _sort: sort,
-    _order: order,
+    page: page,
+    limit: limit,
+    sort: sort,
+    order: order,
     ...(status !== "all" && { status }),
   });
+  try {
+    const res = await API.get(`orders`, {
+      params,
+      signal,
+    });
 
-  const res = await fetch(`http://localhost:3001/orders?${params}`);
-
-  if (!res.ok) throw new Error("Failed to fetch orders");
-
-  const total = res.headers.get("X-Total-Count");
-  const data = await res.json();
-
-  return { data, total: Number(total) };
+    return { data: res.data.data, total: Number(res.data.total) };
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to fetch");
+  }
 };

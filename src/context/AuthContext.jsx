@@ -1,24 +1,29 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext, useState } from "react";
+import { logoutUser } from "../services/authApi";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isAuth, setIsAuth] = useState(
-    localStorage.getItem("isAuth") === "true"
+  const queryClient = useQueryClient()
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
   );
 
-  const login = () => {
-    setIsAuth(true);
-    localStorage.setItem("isAuth", "true");
+  const login = (data) => {
+    setUser(data.user)
+    localStorage.setItem("user", JSON.stringify(data.user));
   };
 
   const logout = () => {
-    setIsAuth(false);
-    localStorage.removeItem("isAuth");
+    logoutUser();
+    setUser(null);
+    localStorage.removeItem("user");
+    queryClient.clear();
   };
 
   return (
-    <AuthContext.Provider value={{ isAuth, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

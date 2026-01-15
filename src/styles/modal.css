@@ -10,7 +10,8 @@
 .modal {
   background: white;
   padding: 20px;
-  width: 300px;
+  min-width: 300px;
+  width: fit-content;
   border-radius: 6px;
 }
 

@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { useAuth } from "../context/AuthContext";
 import { NavLink, useNavigate } from "react-router-dom";
-import { createUser } from "../services/postUsersApi";
+import { createUser } from "../services/authApi";
 import { useState } from "react";
 
 const Signup = () => {
@@ -9,14 +8,12 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login } = useAuth();
   const navigate = useNavigate();
 
   const signupMutation = useMutation({
     mutationFn: createUser,
     onSuccess: (data) => {
-      login(data);
-      navigate("/");
+      navigate("/login");
     },
   });
 
@@ -27,7 +24,7 @@ const Signup = () => {
       name,
       email,
       password,
-      role: "User",
+      role: "seller",
     });
   };
 
@@ -44,6 +41,9 @@ const Signup = () => {
 
         <input required type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
         <br /><br />
+        {/* <input  type="checkbox"  onChange={e => setIsSeller(e.target.checked)} />
+        <label htmlFor="checkbox"> Do you want to sell books ?</label>
+        <br /><br /> */}
 
         <button type="submit" disabled={signupMutation.isLoading}>
           {signupMutation.isLoading ? "Signing up..." : "Signup"}

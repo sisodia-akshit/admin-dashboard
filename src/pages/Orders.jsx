@@ -7,8 +7,11 @@ import Pagination from "../components/Pagination";
 import Filter from "../components/Filter";
 import useQueryParams from "../hooks/useQueryParams";
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "../context/AuthContext";
 
 const Orders = () => {
+  const { user } = useAuth();
+
   const { getParam, setParams } = useQueryParams();
 
   const page = Number(getParam("page") || 1);
@@ -46,7 +49,7 @@ const Orders = () => {
   const orders = data?.data ?? [];
   const total = data?.total ?? 0;
   const totalPages = Math.ceil(total / OrdersPerPage);
-  
+
   useEffect(() => {
     if (page > totalPages && totalPages > 0) {
       setParams({ page: 1 });
@@ -73,13 +76,21 @@ const Orders = () => {
   };
 
 
+  if (user.role !== "admin") {
+    return (
+      <Layout>
+        <p>You are not authorized to view orders.</p>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <h1>Orders</h1>
       {error && <p style={{ color: "red" }}>{error.message}</p>}
       <Filter
         value={status}
-        options={["All", "Pending", "Delivered"]}
+        options={["All", "pending", "delivered", "cancelled"]}
         onChange={onStatusChange}
       />
       <div style={{ minHeight: "18px" }}>
@@ -89,8 +100,10 @@ const Orders = () => {
         columns={[
           { label: "ID", key: "id" },
           { label: "Customer", key: "customer" },
+          { label: "Items", key: "items" },
           { label: "Amount", key: "amount" },
           { label: "Status", key: "status" },
+          { label: "CreatedAt", key: "createdAt" },
           { label: "Action", key: null },
         ]}
         data={orders}
@@ -101,11 +114,15 @@ const Orders = () => {
         }
         onSort={onSort}
         renderRow={(o) => (
-          <tr key={o.id}>
-            <td>{o.id}</td>
-            <td>{o.customer}</td>
-            <td>₹{o.amount}</td>
+          <tr key={o._id}>
+            <td>{o._id}</td>
+            <td>{`${o.user.name} (${o.user.email})`}</td>
+            <td>{o.items.map((item, i) => {
+              return <span key={i}>{i + 1}. {item.title}, <br /></span>
+            })}</td>
+            <td>₹{o.totalAmount}</td>
             <td>{o.status}</td>
+            <td>{o.createdAt}</td>
             <td>
               <button onClick={() => setSelectedOrder(o)}>
                 View
@@ -118,9 +135,10 @@ const Orders = () => {
       {selectedOrder && (
         <Modal onClose={() => setSelectedOrder(null)}>
           <h3>Order Details</h3>
-          <p>ID: {selectedOrder.id}</p>
-          <p>Customer: {selectedOrder.customer}</p>
-          <p>Amount: ₹{selectedOrder.amount}</p>
+          <p>ID: {selectedOrder._id}</p>
+          <p>Customer (name): {selectedOrder.user.name}</p>
+          <p>Customer (email): {selectedOrder.user.email}</p>
+          <p>Amount: ₹{selectedOrder.totalAmount}</p>
           <p>Status: {selectedOrder.status}</p>
         </Modal>
       )}

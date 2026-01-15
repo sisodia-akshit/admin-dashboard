@@ -1,14 +1,14 @@
 import { useAuth } from "../context/AuthContext";
 
 const Topbar = ({ onMenuClick }) => {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <div className="topbar">
       <button className="menu-btn" onClick={onMenuClick}>
         ☰
       </button>
-      <h3>Admin Dashboard</h3>
+      {user.role === "admin" ? <h3>Admin Dashboard</h3> : <h3>Dashboard</h3>}
       <button onClick={logout}>Logout</button>
     </div>
   );

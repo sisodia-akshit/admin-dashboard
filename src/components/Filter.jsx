@@ -5,7 +5,7 @@ const Filter = ({ value, options, onChange }) => {
             onChange={onChange}
         >
             {options.map((o,i) => {
-                return <option key={i}>{o}</option>
+                return <option key={i} style={{textTransform:"capitalize"}}>{o}</option>
             })}
         </select>
     );

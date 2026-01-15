@@ -7,10 +7,13 @@ import useDebounce from "../hooks/useDebounce";
 import useQueryParams from "../hooks/useQueryParams";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "../context/AuthContext";
 
 
 
 const Users = () => {
+  const { user } = useAuth();
+
   const { getParam, setParams } = useQueryParams();
 
   const page = Number(getParam("page", 1));
@@ -77,6 +80,14 @@ const Users = () => {
     })
   };
 
+  if (user.role !== "admin") {
+    return (
+      <Layout>
+        <p>You are not authorized to view users.</p>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <h1>Users</h1>
@@ -84,7 +95,7 @@ const Users = () => {
       {error && <p style={{ color: "red" }}>{error.message}</p>}
 
       <SearchInput
-        placeholder={"Search user"}
+        placeholder={"Search user by email"}
         value={search}
         onChange={onSearchChange}
         style={{ marginBottom: "10px", padding: "8px" }}
@@ -110,8 +121,8 @@ const Users = () => {
         }
         onSort={onSort}
         renderRow={(u) => (
-          <tr key={u.id}>
-            <td>{u.id}</td>
+          <tr key={u._id}>
+            <td>{u._id}</td>
             <td>{u.name}</td>
             <td>{u.email || "N/A"}</td>
             <td>{u.role}</td>

@@ -7,10 +7,12 @@ This project focuses on frontend architecture, state management, protected route
 
 ## 🚀 Features
 
-- Fake authentication using React Context API
-- Protected routes (Dashboard accessible only after login)
+- React Query for server state management
+- Server-side pagination, sorting, and filtering
+- URL-synced state (search, pagination)
+- Authentication with protected routes
+- Dynamic dashboard with real stats
 - Responsive sidebar with hamburger menu for mobile devices
-- Dashboard summary cards
 - Data visualization using charts
 - Users management with search and pagination
 - Orders management with status filter

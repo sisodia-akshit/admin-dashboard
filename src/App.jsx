@@ -5,6 +5,7 @@ import Orders from "./pages/Orders";
 import Login from "./pages/Login";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Signup from "./pages/Signup";
+import Books from "./pages/Books";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
         <Route
           path="/users"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["admin"]}>
               <Users />
             </ProtectedRoute>
           }
@@ -34,8 +35,17 @@ function App() {
         <Route
           path="/orders"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={["admin"]}>
               <Orders />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/books"
+          element={
+            <ProtectedRoute>
+              <Books />
             </ProtectedRoute>
           }
         />

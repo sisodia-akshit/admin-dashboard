@@ -1,3 +1,5 @@
+import API from "./api";
+
 export const getUsers = async ({
   search,
   page,
@@ -7,19 +9,19 @@ export const getUsers = async ({
   signal,
 }) => {
   const params = new URLSearchParams({
-    _page: page,
-    _limit: limit,
-    _sort: sort,
-    _order: order,
-    ...(search && { name_like: search }),
+    page: page,
+    limit: limit,
+    sort: sort,
+    order: order,
+    ...(search && { email: search }),
   });
-
-  const res = await fetch(`http://localhost:3001/users?${params}`, { signal });
-
-  if (!res.ok) throw new Error("Failed to fetch users");
-
-  const total = res.headers.get("X-Total-Count");
-  const data = await res.json();
-
-  return { data, total: Number(total) };
+  try {
+    const res = await API.get(`users`, {
+      params,
+      signal,
+    });
+    return { data: res.data.data, total: res.data.total };
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to fetch");
+  }
 };

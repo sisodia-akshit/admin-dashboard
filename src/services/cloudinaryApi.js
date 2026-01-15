@@ -1,8 +1,8 @@
 import API from "./api";
 
-export const getDashboardStats = async ({ signal }) => {
+export const getCloudSignature = async ({ signal }) => {
   try {
-    const res = await API.get("dashboard", {
+    const res = await API.get("cloudinary/signature", {
       signal,
     });
     return res.data;
