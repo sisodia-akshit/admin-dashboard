@@ -68,6 +68,8 @@ const Books = () => {
         setParams({ page: 1 });
     }, [viewMode]);
 
+    if (!user) if (!user) return <p className='container'>loading...</p>
+
     return (
         <Layout>
             <h1>Books</h1>

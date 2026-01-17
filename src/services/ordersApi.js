@@ -1,6 +1,6 @@
 import API from "./api";
 
-export const getOrders = async ({
+export const getAllOrders = async ({
   status,
   page,
   limit,
@@ -16,11 +16,22 @@ export const getOrders = async ({
     ...(status !== "all" && { status }),
   });
   try {
-    const res = await API.get(`orders`, {
+    const res = await API.get(`orders/all`, {
       params,
       signal,
     });
 
+    return { data: res.data.data, total: Number(res.data.total) };
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to fetch");
+  }
+};
+
+export const getOrders = async ({ signal }) => {
+  try {
+    const res = await API.get(`orders`, {
+      signal,
+    });
     return { data: res.data.data, total: Number(res.data.total) };
   } catch (error) {
     throw new Error(error.response?.data?.message || "Failed to fetch");

@@ -1,0 +1,35 @@
+table {
+  border-collapse: collapse;
+  background: white;
+}
+
+th {
+  background: #f3f4f6;
+  text-align: left;
+}
+
+td, th {
+  padding: 10px;
+}
+
+tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+.googleBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  gap: 10px;
+  color: #000;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: .2s;
+  margin-top: 10px;
+}
+.googleBtn:hover{
+  box-shadow: 0 1px 2px #0000002e inset;
+}

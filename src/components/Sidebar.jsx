@@ -12,7 +12,7 @@ const Sidebar = ({ show, setShow }) => {
       <nav>
         <NavLink to="/" onClick={() => setShow(false)}>Dashboard</NavLink>
         {user.role === "admin" && <NavLink to="/users" onClick={() => setShow(false)}>Users</NavLink>}
-        {user.role === "admin" && <NavLink to="/orders" onClick={() => setShow(false)}>Orders</NavLink>}
+        <NavLink to="/orders" onClick={() => setShow(false)}>Orders</NavLink>
         <NavLink to="/books" onClick={() => setShow(false)}>Books</NavLink>
       </nav>
     </div>

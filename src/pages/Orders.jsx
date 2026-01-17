@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import Modal from "../components/Modal";
-import { getOrders } from "../services/ordersApi";
+import { getAllOrders, getOrders } from "../services/ordersApi";
 import DataTable from "../components/DataTable";
 import Pagination from "../components/Pagination";
 import Filter from "../components/Filter";
@@ -35,14 +35,14 @@ const Orders = () => {
       order,
     ],
     queryFn: ({ signal }) =>
-      getOrders({
+      user.role === "admin" ? getAllOrders({
         page,
         limit: OrdersPerPage,
         status: status?.toLowerCase(),
         sort,
         order,
         signal,
-      }),
+      }) : getOrders({ signal }),
     keepPreviousData: true,
   });
 
@@ -75,24 +75,18 @@ const Orders = () => {
     });
   };
 
-
-  if (user.role !== "admin") {
-    return (
-      <Layout>
-        <p>You are not authorized to view orders.</p>
-      </Layout>
-    );
-  }
-
+  if (!user) if (!user) return <p className='container'>loading...</p>
   return (
     <Layout>
       <h1>Orders</h1>
       {error && <p style={{ color: "red" }}>{error.message}</p>}
-      <Filter
+
+      {user.role === "admin" && <Filter
         value={status}
-        options={["All", "pending", "delivered", "cancelled"]}
+        options={["All", "pending", "paid", "shipped", "delivered", "cancelled"]}
         onChange={onStatusChange}
-      />
+      />}
+
       <div style={{ minHeight: "18px" }}>
         {isLoading && <small>Loading orders...</small>}
       </div>
@@ -116,7 +110,7 @@ const Orders = () => {
         renderRow={(o) => (
           <tr key={o._id}>
             <td>{o._id}</td>
-            <td>{`${o.user.name} (${o.user.email})`}</td>
+            <td>{`${o.user?.name}, (${o.user?.email})`}</td>
             <td>{o.items.map((item, i) => {
               return <span key={i}>{i + 1}. {item.title}, <br /></span>
             })}</td>
@@ -136,8 +130,8 @@ const Orders = () => {
         <Modal onClose={() => setSelectedOrder(null)}>
           <h3>Order Details</h3>
           <p>ID: {selectedOrder._id}</p>
-          <p>Customer (name): {selectedOrder.user.name}</p>
-          <p>Customer (email): {selectedOrder.user.email}</p>
+          <p>Customer (name): {selectedOrder.user?.name}</p>
+          <p>Customer (email): {selectedOrder.user?.email}</p>
           <p>Amount: ₹{selectedOrder.totalAmount}</p>
           <p>Status: {selectedOrder.status}</p>
         </Modal>

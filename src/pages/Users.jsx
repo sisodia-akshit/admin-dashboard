@@ -53,6 +53,7 @@ const Users = () => {
   const total = data?.total ?? 0;
   const totalPages = Math.ceil(total / usersPerPage);
 
+  if (!user) if (!user) return <p className='container'>loading...</p>
   useEffect(() => {
     if (page > totalPages && totalPages > 0) {
       setParams({ page: 1 });

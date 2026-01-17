@@ -1,29 +1,44 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { createContext, useContext, useState } from "react";
-import { logoutUser } from "../services/authApi";
+import { createContext, useContext } from "react";
+import { getUser, logoutUser } from "../services/authApi";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const queryClient = useQueryClient()
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
-  );
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-  const login = (data) => {
-    setUser(data.user)
-    localStorage.setItem("user", JSON.stringify(data.user));
+  // getMe
+  const {
+    data,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["user"],
+    queryFn: ({ signal }) => getUser({ signal }),
+    retry: false,                 // STOP retrying on 401
+    refetchOnWindowFocus: false,  // STOP refetch spam
+    staleTime: Infinity,          // auth does not go stale
+  });
+
+  const user = data?.user ?? null;
+
+  // login = refetch user
+  const login = async () => {
+    await queryClient.invalidateQueries(["user"]);
+    navigate("/");
   };
 
-  const logout = () => {
-    logoutUser();
-    setUser(null);
-    localStorage.removeItem("user");
+  // logout = clear cookie + reset cache
+  const logout = async () => {
+    await logoutUser();
     queryClient.clear();
+    navigate("/login");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, isLoading, error, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "../context/AuthContext";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { loginUser } from "../services/authApi";
 import { useState } from "react";
 
@@ -9,13 +9,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const { login } = useAuth();
-  const navigate = useNavigate();
 
   const loginMutation = useMutation({
     mutationFn: loginUser,
-    onSuccess: (data) => {
-      login(data);
-      navigate("/");
+    onSuccess: () => {
+      login();
     },
   });
 
@@ -51,6 +49,21 @@ const Login = () => {
           Don't have an Account? <NavLink to={"/signup"}>Signup</NavLink>
         </span>
       </form>
+      <p style={{ margin: "0px auto", color: "#999" }}>---------- or ----------</p>
+      <button
+        className="googleBtn"
+        onClick={() =>
+          window.location.href =
+          "http://localhost:5000/api/auth/google"
+        }
+      >
+        <img
+          src="https://developers.google.com/identity/images/g-logo.png"
+          alt="Google"
+          width="18"
+        />
+        Continue with Google
+      </button>
     </div>
   );
 };

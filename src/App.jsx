@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Users from "./pages/Users";
 import Orders from "./pages/Orders";
@@ -6,10 +6,10 @@ import Login from "./pages/Login";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Signup from "./pages/Signup";
 import Books from "./pages/Books";
+import "./styles/App.css"
 
 function App() {
   return (
-    <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -35,7 +35,7 @@ function App() {
         <Route
           path="/orders"
           element={
-            <ProtectedRoute allowedRoles={["admin"]}>
+            <ProtectedRoute>
               <Orders />
             </ProtectedRoute>
           }
@@ -50,7 +50,6 @@ function App() {
           }
         />
       </Routes>
-    </BrowserRouter>
   );
 }
 
