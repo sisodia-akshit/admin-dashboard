@@ -54,7 +54,8 @@ const Login = () => {
         className="googleBtn"
         onClick={() =>
           window.location.href =
-          "http://localhost:5000/api/auth/google"
+          // "http://localhost:5000/api/auth/google"
+          "https://mern-bookstore-backend-o6qf.onrender.com/api/auth/google"
         }
       >
         <img
