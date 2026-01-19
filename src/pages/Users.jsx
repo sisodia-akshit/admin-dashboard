@@ -2,17 +2,20 @@ import Layout from "../components/Layout";
 import DataTable from "../components/DataTable";
 import Pagination from "../components/Pagination";
 import SearchInput from "../components/SearchInput";
-import { getUsers } from "../services/getUsersApi";
 import useDebounce from "../hooks/useDebounce";
 import useQueryParams from "../hooks/useQueryParams";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../context/AuthContext";
+import { getUsers } from "../services/usersApi";
+import ChangeRoleModel from "../components/ChangeRoleModel";
 
 
 
 const Users = () => {
   const { user } = useAuth();
+  const [updatingUser, setUpdatingUser] = useState(null);
+
 
   const { getParam, setParams } = useQueryParams();
 
@@ -94,6 +97,11 @@ const Users = () => {
       <h1>Users</h1>
 
       {error && <p style={{ color: "red" }}>{error.message}</p>}
+      {/* to change Role  */}
+      {updatingUser && <ChangeRoleModel
+        updateUser={updatingUser}
+        onClose={() => setUpdatingUser(null)}
+      />}
 
       <SearchInput
         placeholder={"Search user by email"}
@@ -113,6 +121,7 @@ const Users = () => {
           { label: "Name", key: "name" },
           { label: "Email", key: "email" },
           { label: "Role", key: "role" },
+          { label: "Action", key: null },
         ]}
         data={users}
         sortConfig={
@@ -127,6 +136,9 @@ const Users = () => {
             <td>{u.name}</td>
             <td>{u.email || "N/A"}</td>
             <td>{u.role}</td>
+            <td>{(user.role === "admin") && <><button onClick={() => setUpdatingUser(u)}>
+              Edit
+            </button>&nbsp;</>}</td>
           </tr>
         )}
       />

@@ -6,7 +6,7 @@ import SearchInput from "../components/SearchInput";
 import useDebounce from "../hooks/useDebounce";
 import useQueryParams from "../hooks/useQueryParams";
 import { useQuery } from "@tanstack/react-query";
-import { getBooks } from "../services/booksApi";
+import { getBooks, getMyBooks } from "../services/booksApi";
 //CRUD book
 import CreateBookModal from "../components/CreateBookModal";
 import EditBookModal from "../components/EditBookModal";
@@ -16,12 +16,8 @@ import { useAuth } from "../context/AuthContext";
 
 const Books = () => {
     const { user } = useAuth();
-
     const isAdmin = user?.role === "admin";
-    const isSeller = user?.role === "seller";
-    const [viewMode, setViewMode] = useState("all");
-    const createdBy =
-        viewMode === "mine" ? user.id : undefined;
+    const [isMyBooks, setMyBooks] = useState(true);
     // CRUD 
     const [open, setOpen] = useState(false);
     const [editingBook, setEditingBook] = useState(null);
@@ -39,15 +35,21 @@ const Books = () => {
     const debouncedSearch = useDebounce(search, 500);
 
     const { data, isLoading, error } = useQuery({
-        queryKey: ["books", page, debouncedSearch, sort, order, viewMode],
+        queryKey: ["books", page, debouncedSearch, sort, order, isMyBooks],
         queryFn: ({ signal }) =>
-            getBooks({
+            isMyBooks ? getMyBooks({
                 page,
                 limit: booksPerPage,
                 title: debouncedSearch,
                 sort,
                 order,
-                createdBy,
+                signal,
+            }) : getBooks({
+                page,
+                limit: booksPerPage,
+                title: debouncedSearch,
+                sort,
+                order,
                 signal,
             }),
         keepPreviousData: true,
@@ -57,16 +59,9 @@ const Books = () => {
     const total = data?.totalBooks ?? 0;
     const totalPages = Math.ceil(total / booksPerPage);
 
-    const visibleBooks =
-        viewMode === "mine" && user.role !== "admin"
-            ? books.filter((b) => b.createdBy === user.id)
-            : viewMode === "mine"
-                ? books.filter((b) => b.createdBy === user.id)
-                : books;
-
     useEffect(() => {
         setParams({ page: 1 });
-    }, [viewMode]);
+    }, [isMyBooks]);
 
     if (!user) if (!user) return <p className='container'>loading...</p>
 
@@ -89,14 +84,12 @@ const Books = () => {
             </div>
 
             {/* add book btn */}
-            {(isAdmin || isSeller) &&
-                <>
-                    <button onClick={() => setOpen(true)}>
-                        + Add Book
-                    </button>
-                    <br /><br />
-                </>
-            }
+
+            <button onClick={() => setOpen(true)}>
+                + Add Book
+            </button>
+            <br /><br />
+
 
             {/* CRUD book model */}
             {open && (
@@ -117,20 +110,16 @@ const Books = () => {
                 />
             )}
 
-            {(isAdmin || isSeller) &&
-                <>
-                    <div style={{ marginBottom: "10px" }}>
-                        <button onClick={() => setViewMode("all")} disabled={viewMode === "all"} style={viewMode === "all" ? {} : { background: "#ccc" }}>
-                            All Books
-                        </button>
+            {isAdmin && <div style={{ marginBottom: "10px" }}>
+                <button onClick={() => setMyBooks(false)} disabled={!isMyBooks} style={!isMyBooks ? {} : { background: "#ccc" }}>
+                    All Books
+                </button>
 
-                        <button onClick={() => setViewMode("mine")} disabled={viewMode === "mine"} style={viewMode === "mine" ? { marginLeft: "6px" } : { background: "#ccc", marginLeft: "6px" }} >
-                            My Books
-                        </button>
-                    </div>
-                    <br /><br />
-                </>
-            }
+                <button onClick={() => setMyBooks(true)} disabled={isMyBooks} style={isMyBooks ? { marginLeft: "6px" } : { background: "#ccc", marginLeft: "6px" }} >
+                    My Books
+                </button>
+            </div>}
+            <h2>Books Data</h2>
 
             <DataTable
                 columns={[
@@ -143,7 +132,7 @@ const Books = () => {
                     { label: "Genre", key: "genre" },
                     { label: "Action", key: null },
                 ]}
-                data={visibleBooks}
+                data={books}
                 sortConfig={sort ? { key: sort, direction: order } : null}
                 onSort={(config) =>
                     setParams({
@@ -165,10 +154,10 @@ const Books = () => {
                         })}</td>
                         <td>
                             <div style={{ display: "flex" }}>
-                                {(isAdmin || b.createdBy === user.id) && <button onClick={() => setEditingBook(b)}>
+                                {(isAdmin || b.createdBy === user._id) && <><button onClick={() => setEditingBook(b)}>
                                     Edit
-                                </button>}
-                                {(!isAdmin && b.createdBy !== user.id) && <span>Admin only</span>}
+                                </button>&nbsp;</>}
+                                {(!isAdmin && b.createdBy !== user._id) && <span>Admin only</span>}
                                 {isAdmin && <button
                                     onClick={() => setDeletingBook(b)}
                                     style={{ marginLeft: "6px", backgroundColor: "red" }}

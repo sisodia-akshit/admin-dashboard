@@ -25,3 +25,14 @@ export const getUsers = async ({
     throw new Error(error.response?.data?.message || "Failed to fetch");
   }
 };
+export const setUserRole = async ({ id, role, signal }) => {
+  try {
+    const res = await API.patch(`users/change_role/${id}`, {
+      role,
+      signal,
+    });
+    return res;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Something went wrong!!");
+  }
+};

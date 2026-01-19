@@ -1,7 +1,7 @@
 import Modal from "./Modal";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateBook } from "../services/booksApi";
+import { updateBook, updateMyBook } from "../services/booksApi";
 import { useAuth } from "../context/AuthContext";
 import API from "../services/api";
 
@@ -22,7 +22,7 @@ const EditBookModal = ({ book, onClose }) => {
     // const [image, setImage] = useState(book.coverImage);
 
     const updateBookMutation = useMutation({
-        mutationFn: updateBook,
+        mutationFn: user.role==="admin"?updateBook:updateMyBook,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["books"] });
             queryClient.invalidateQueries({ queryKey: ["dashboard-stats"] });
@@ -38,34 +38,31 @@ const EditBookModal = ({ book, onClose }) => {
             setRatings(e.target.value)
         }
     }
-    const uploadImage = async (file) => {
-        // 1. get signature
-        const sigRes = await API.get("/cloudinary/signature", { withCredentials: true });
-        const { timestamp, signature, cloudName, apiKey } = sigRes.data;
-        // 2. upload to cloudinary
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("api_key", apiKey);
-        formData.append("timestamp", timestamp);
-        formData.append("signature", signature);
-        formData.append("folder", "books");
+    // const uploadImage = async (file) => {
+    //     const sigRes = await API.get("/cloudinary/signature", { withCredentials: true });
+    //     const { timestamp, signature, cloudName, apiKey } = sigRes.data;
+    //     const formData = new FormData();
+    //     formData.append("file", file);
+    //     formData.append("api_key", apiKey);
+    //     formData.append("timestamp", timestamp);
+    //     formData.append("signature", signature);
+    //     formData.append("folder", "books");
 
-        const uploadRes = await fetch(
-            `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-            {
-                method: "POST",
-                body: formData,
-            }
-        );
+    //     const uploadRes = await fetch(
+    //         `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+    //         {
+    //             method: "POST",
+    //             body: formData,
+    //         }
+    //     );
 
-        if (!uploadRes.ok) {
-            throw new Error("Image upload failed");
-        }
+    //     if (!uploadRes.ok) {
+    //         throw new Error("Image upload failed");
+    //     }
 
-        const data = await uploadRes.json();
-        // console.log("Cloudinary response:", data);
-        return data.secure_url;
-    };
+    //     const data = await uploadRes.json();
+    //     return data.secure_url;
+    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -97,7 +94,7 @@ const EditBookModal = ({ book, onClose }) => {
 
     };
 
-    if (user.role === "seller" && book.createdBy !== user.id) {
+    if (user.role === "user" && book.createdBy !== user.id) {
         return (
             <Modal onClose={onClose}>
                 <p>You are not allowed to edit this book.</p>

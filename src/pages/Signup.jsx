@@ -57,8 +57,8 @@ const Signup = () => {
 
   const handleVarify = (e) => {
     e.preventDefault();
-    if (otp.length !== 6) {
-      alert("Enter 6-digit OTP");
+    if (otp.length !== 4) {
+      alert("Enter 4-digit OTP");
       return;
     }
     const formData = JSON.parse(localStorage.getItem("signupForm"))
@@ -75,7 +75,6 @@ const Signup = () => {
       name: formData.name,
       email: formData.email,
       password,
-      role: "seller",
     })
   }
 
@@ -136,7 +135,7 @@ const Signup = () => {
           type="text"
           value={otp}
           onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
-          maxLength={6}
+          maxLength={4}
           placeholder="Enter OTP"
         /> &nbsp;
         <span
