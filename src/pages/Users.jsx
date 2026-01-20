@@ -137,7 +137,7 @@ const Users = () => {
             <td>{u.email || "N/A"}</td>
             <td>{u.role}</td>
             <td>{(user.role === "admin") && <><button onClick={() => setUpdatingUser(u)}>
-              Edit
+              Change Role
             </button>&nbsp;</>}</td>
           </tr>
         )}
