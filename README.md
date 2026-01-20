@@ -1,16 +1,21 @@
-Admin Dashboard
+# Admin Dashboard
 
 A modern Admin Dashboard built with React, focused on secure authentication, role-based access, and scalable server-state management.
 
 This project demonstrates real-world frontend patterns such as protected routes, server-side pagination, URL-synced filters, and React Query–based data handling.
 
-🚀 Live Demo
+---
+
+## 🚀 Live Demo
 
 🔗 https://admin-dashboard-by-akshit.netlify.app/
 
-🛠 Tech Stack
+---
 
-Frontend
+
+## 🛠️ Tech Stack
+
+### Frontend
 
 React.js
 
@@ -20,7 +25,7 @@ React Query (TanStack Query)
 
 Context API
 
-Backend (Consumed APIs)
+### Backend (Consumed APIs)
 
 Node.js
 
@@ -28,77 +33,111 @@ Express.js
 
 MongoDB
 
-Deployment
+### Deployment
 
 Netlify (Frontend)
 
-✨ Features
+---
 
-🔐 Authentication using HttpOnly cookies
+## ✨ Feature
 
-👥 Role-based access control (Admin / Seller / Operator)
+- 🔐 Authentication using HttpOnly cookies
 
-🧭 Protected routes with redirect handling
+- 👥 Role-based access control (Admin / Seller / Operator)
 
-📊 Reusable DataTable component with:
+- 🧭 Protected routes with redirect handling
 
-server-side pagination
+- 📊 Reusable DataTable component with:
 
-sorting
+--- server-side pagination
 
-filtering
+--- sorting
 
-🔍 Debounced search
+--- filtering
 
-🔗 URL-synced state (page, filters, sorting)
+- 🔍 Debounced search
 
-⚡ React Query caching & invalidation
+- 🔗 URL-synced state (page, filters, sorting)
 
-📱 Responsive layout with sidebar navigation
+- ⚡ React Query caching & invalidation
 
-🧩 Architecture Highlights
+- 📱 Responsive layout with sidebar navigation
 
-React Query replaces manual useEffect data fetching
+---
 
-Query invalidation used after mutations
+## 🧩 Architecture Highlights
 
-Auth state centralized in AuthContext
+- React Query replaces manual useEffect data fetching
 
-UI state (page, search, sort) synced via URL parameters
+- Query invalidation used after mutations
 
-No sensitive data stored in localStorage
+- Auth state centralized in AuthContext
 
-📂 Project Structure (Simplified)
+- UI state (page, search, sort) synced via URL parameters
+
+- No sensitive data stored in localStorage
+
+---
+
+## 📸 Screenshots
+
+![Login Page](screenshots/login.png)
+![Dashboard](screenshots/dashboard.png)
+![Users Page](screenshots/users.png)
+![Orders Page](screenshots/orders.png)
+
+---
+
+## 📂 Project Structure
+
 src/
  ├─ components/
- │   ├─ DataTable
- │   ├─ Pagination
- │   ├─ Filter
- │   └─ Layout
- ├─ context/
- │   └─ AuthContext
- ├─ hooks/
- │   ├─ useDebounce
- │   └─ useQueryParams
- ├─ pages/
- │   ├─ Dashboard
- │   ├─ Users
- │   └─ Orders
+ │ ├─ DataTable 
+ │ ├─ Pagination 
+ │ ├─ Filter 
+ │ └─ Layout 
+ ├─ context/ 
+ │ └─ AuthContext 
+ ├─ hooks/ 
+ │ ├─ useDebounce 
+ │ └─ useQueryParams 
+ ├─ pages/ 
+ │ ├─ Dashboard 
+ │ ├─ Users 
+ │ └─ Orders 
  └─ services/
-🧪 Local Setup
-git clone https://github.com/sisodia-akshit/admin-dashboard
-cd admin-dashboard
-npm install
-npm start
-📌 Notes
 
-Backend APIs are shared with the Bookstore application
+---
 
-Authentication is cookie-based (no tokens in frontend storage)
+## 🧪 Local Setup
 
-Built to simulate real admin workflows
+- git clone https://github.com/sisodia-akshit/admin-dashboard
 
-👤 Author
+- cd admin-dashboard
+
+- npm install
+
+- npm start
+
+---
+
+## 📌 Notes
+
+- Backend APIs are shared with the Bookstore application
+
+- Authentication is cookie-based (no tokens in frontend storage)
+
+- Built to simulate real admin workflows
+
+---
+
+## 👤 Author
 
 Akshit Sisodiya
 GitHub: https://github.com/sisodia-akshit
+
+---
+
+## ⭐ Feedback
+
+Suggestions and feedback are always welcome!
