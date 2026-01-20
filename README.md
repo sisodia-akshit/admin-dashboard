@@ -1,82 +1,104 @@
-# Admin Dashboard
+Admin Dashboard
 
-A responsive **Admin Dashboard** built using **React** to simulate a real-world admin panel experience.  
-This project focuses on frontend architecture, state management, protected routes, and responsive UI design.
+A modern Admin Dashboard built with React, focused on secure authentication, role-based access, and scalable server-state management.
 
----
+This project demonstrates real-world frontend patterns such as protected routes, server-side pagination, URL-synced filters, and React Query–based data handling.
 
-## 🚀 Features
+🚀 Live Demo
 
-- React Query for server state management
-- Server-side pagination, sorting, and filtering
-- URL-synced state (search, pagination)
-- Authentication with protected routes
-- Dynamic dashboard with real stats
-- Responsive sidebar with hamburger menu for mobile devices
-- Data visualization using charts
-- Users management with search and pagination
-- Orders management with status filter
-- Order details displayed in modal
-- Mobile-friendly and clean UI
+🔗 https://admin-dashboard-by-akshit.netlify.app/
 
----
+🛠 Tech Stack
 
-## 🛠️ Tech Stack
+Frontend
 
-- React
-- React Router DOM
-- Context API
-- Recharts
-- HTML & CSS
-- JavaScript (ES6)
+React.js
 
----
+React Router
 
-## 📸 Screenshots
+React Query (TanStack Query)
 
-![Login Page](screenshots/login.png)
-![Dashboard](screenshots/dashboard.png)
-![Users Page](screenshots/users.png)
-![Orders Page](screenshots/orders.png)
+Context API
 
----
+Backend (Consumed APIs)
 
-## 🌐 Live Demo
+Node.js
 
-👉 https://admin-dashboard-by-akshit.netlify.app/
+Express.js
 
----
+MongoDB
 
-## 📂 Project Structure
+Deployment
 
+Netlify (Frontend)
+
+✨ Features
+
+🔐 Authentication using HttpOnly cookies
+
+👥 Role-based access control (Admin / Seller / Operator)
+
+🧭 Protected routes with redirect handling
+
+📊 Reusable DataTable component with:
+
+server-side pagination
+
+sorting
+
+filtering
+
+🔍 Debounced search
+
+🔗 URL-synced state (page, filters, sorting)
+
+⚡ React Query caching & invalidation
+
+📱 Responsive layout with sidebar navigation
+
+🧩 Architecture Highlights
+
+React Query replaces manual useEffect data fetching
+
+Query invalidation used after mutations
+
+Auth state centralized in AuthContext
+
+UI state (page, search, sort) synced via URL parameters
+
+No sensitive data stored in localStorage
+
+📂 Project Structure (Simplified)
 src/
-├─ components/
-├─ pages/
-├─ context/
-├─ data/
-├─ styles/
-└─ App.jsx
+ ├─ components/
+ │   ├─ DataTable
+ │   ├─ Pagination
+ │   ├─ Filter
+ │   └─ Layout
+ ├─ context/
+ │   └─ AuthContext
+ ├─ hooks/
+ │   ├─ useDebounce
+ │   └─ useQueryParams
+ ├─ pages/
+ │   ├─ Dashboard
+ │   ├─ Users
+ │   └─ Orders
+ └─ services/
+🧪 Local Setup
+git clone https://github.com/sisodia-akshit/admin-dashboard
+cd admin-dashboard
+npm install
+npm start
+📌 Notes
 
----
+Backend APIs are shared with the Bookstore application
 
-## 📌 Notes
+Authentication is cookie-based (no tokens in frontend storage)
 
-- This project uses **static (mock) data** for demonstration purposes.
-- Authentication is simulated using localStorage.
-- Designed to demonstrate frontend concepts used in real admin dashboards.
+Built to simulate real admin workflows
 
----
+👤 Author
 
-## 👤 Author
-
-**Akshit Sisodiya**  
-MERN Stack Developer (Fresher)
-
-- GitHub: https://github.com/sisodia-akshit
-- LinkedIn: https://www.linkedin.com/in/akshit-sisodiya-6732602aa/
-
----
-
-## ⭐ Feedback
-
-Suggestions and feedback are always welcome!
+Akshit Sisodiya
+GitHub: https://github.com/sisodia-akshit
