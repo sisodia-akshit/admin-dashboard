@@ -1,5 +1,14 @@
 import API from "./api";
 
+export const getUser = async () => {
+  try {
+    const res = await API.get("users/me");
+
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to logout");
+  }
+};
 export const getUsers = async ({
   search,
   page,
@@ -13,7 +22,7 @@ export const getUsers = async ({
     limit: limit,
     sort: sort,
     order: order,
-    ...(search && { email: search }),
+    ...(search && { search: search }),
   });
   try {
     const res = await API.get(`users`, {

@@ -34,10 +34,11 @@ const Login = () => {
         <br /><br />
 
         <input required type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+        <br /><NavLink to={"forget-password"} style={{ textDecoration: "none", fontSize: ".7rem" }}>Forget Password</NavLink>
         <br /><br />
 
-        <button type="submit" disabled={loginMutation.isLoading}>
-          {loginMutation.isLoading ? "Logging up..." : "Login"}
+        <button type="submit" disabled={loginMutation.isPending}>
+          {loginMutation.isPending ? "Logging up..." : "Login"}
         </button>
 
         {loginMutation.error && (

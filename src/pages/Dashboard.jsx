@@ -5,6 +5,7 @@ import SalesCharts from "../components/SalesChart";
 import { useQuery } from "@tanstack/react-query";
 import { getAdminStats, getDashboardStats } from "../services/dashboardApi";
 import { useAuth } from "../context/AuthContext";
+import Loading from "../components/Loading";
 
 
 const Dashboard = () => {
@@ -18,7 +19,7 @@ const Dashboard = () => {
   if (error) {
     return <Layout><p>{error.message}</p></Layout>;
   }
-  if (!user) if (!user) return <p className='container'>loading...</p>
+  if (!user) if (!user) return <div className='container'><Loading/></div>
 
   return (
     <Layout>
@@ -33,6 +34,7 @@ const Dashboard = () => {
         {user.role === "admin" && <StatCard title="Total Users" value={isLoading ? "—" : data.totalUsers} path={"/users"} />}
         {user.role === "admin" && <StatCard title="Total Orders" value={isLoading ? "—" : data.totalOrders} path={"/Orders"} />}
         <StatCard title="Pending Orders" value={isLoading ? "—" : data.orders.pending} path={"/Orders?status=pending&page=1"} />
+        <StatCard title="Placed Orders" value={isLoading ? "—" : data.orders.placed} path={"/Orders?status=placed&page=1"} />
         <StatCard title="Paid Orders" value={isLoading ? "—" : data.orders.paid} path={"/Orders?status=paid&page=1"}/>
         <StatCard title="Shipped Orders" value={isLoading ? "—" : data.orders.shipped} path={"/Orders?status=shipped&page=1"}/>
         <StatCard title="Delivered Orders" value={isLoading ? "—" : data.orders.delivered} path={"/Orders?status=delivered&page=1"}/>

@@ -3,7 +3,7 @@ import API from "./api";
 export const getBooks = async ({
   page,
   limit,
-  title,
+  search,
   sort,
   order,
   signal,
@@ -12,7 +12,7 @@ export const getBooks = async ({
   const params = new URLSearchParams({
     page: page,
     limit: limit,
-    ...(title && { title: title }),
+    ...(search && { search: search }),
     ...(sort && { sort: sort }),
     ...(order && { order: order }),
     ...(createdBy && { createdBy }),
@@ -27,7 +27,7 @@ export const getBooks = async ({
 export const getMyBooks = async ({
   page,
   limit,
-  title,
+  search,
   sort,
   order,
   signal,
@@ -36,7 +36,7 @@ export const getMyBooks = async ({
   const params = new URLSearchParams({
     page: page,
     limit: limit,
-    ...(title && { title: title }),
+    ...(search && { search: search }),
     ...(sort && { sort: sort }),
     ...(order && { order: order }),
     ...(createdBy && { createdBy }),

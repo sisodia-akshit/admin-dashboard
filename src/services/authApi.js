@@ -16,15 +16,23 @@ export const loginUser = async ({ email, password }) => {
     throw new Error(error.response?.data?.message || "Failed to login");
   }
 };
-export const getUser = async () => {
+export const forgetPassword = async ({ email }) => {
   try {
-    const res = await API.get("auth/me");
-
+    const res = await API.post("auth/forget-password", { email });
     return res.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to logout");
+    throw new Error(error.response?.data?.message || "Failed to login");
   }
 };
+export const resetPassword = async ({ token, password }) => {
+  try {
+    const res = await API.post(`auth/reset-password/${token}`, { password });
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to login");
+  }
+};
+
 export const logoutUser = async () => {
   try {
     const res = await API.get("auth/logout");
@@ -39,7 +47,10 @@ export const generateOtp = async (data) => {
     const res = await API.post("auth/generate_otp", data);
     return res.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Something went wrong.Please try again later...");
+    throw new Error(
+      error.response?.data?.message ||
+        "Something went wrong.Please try again later...",
+    );
   }
 };
 export const verifyOtp = async (user) => {
@@ -48,10 +59,10 @@ export const verifyOtp = async (user) => {
 
     return res;
   } catch (error) {
-    console.log(error.response)
+    console.log(error.response);
     throw new Error(
       error.response?.data?.message ||
-        "Something went wrong. Please try again later..."
+        "Something went wrong. Please try again later...",
     );
   }
 };

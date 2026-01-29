@@ -40,14 +40,14 @@ const Books = () => {
             isMyBooks ? getMyBooks({
                 page,
                 limit: booksPerPage,
-                title: debouncedSearch,
+                search: debouncedSearch,
                 sort,
                 order,
                 signal,
             }) : getBooks({
                 page,
                 limit: booksPerPage,
-                title: debouncedSearch,
+                search: debouncedSearch,
                 sort,
                 order,
                 signal,
@@ -110,7 +110,7 @@ const Books = () => {
                 />
             )}
 
-            {isAdmin && <div style={{ marginBottom: "10px" }}>
+            <div style={{ marginBottom: "10px" }}>
                 <button onClick={() => setMyBooks(false)} disabled={!isMyBooks} style={!isMyBooks ? {} : { background: "#ccc" }}>
                     All Books
                 </button>
@@ -118,18 +118,19 @@ const Books = () => {
                 <button onClick={() => setMyBooks(true)} disabled={isMyBooks} style={isMyBooks ? { marginLeft: "6px" } : { background: "#ccc", marginLeft: "6px" }} >
                     My Books
                 </button>
-            </div>}
+            </div>
             <h2>Books Data</h2>
 
             <DataTable
                 columns={[
-                    { label: "ID", key: "id" },
+                    // { label: "ID", key: "id" },
                     { label: "Title", key: "title" },
                     { label: "Author", key: "author" },
-                    { label: "Ratings", key: "ratings" },
                     { label: "Price", key: "price" },
                     { label: "Stock", key: "stock" },
-                    { label: "Genre", key: "genre" },
+                    { label: "Category", key: "category" },
+                    // { label: "Ratings", key: "ratings" },
+                    // { label: "Genre", key: "genre" },
                     { label: "Action", key: null },
                 ]}
                 data={books}
@@ -143,15 +144,16 @@ const Books = () => {
                 }
                 renderRow={(b, i) => (
                     <tr key={b._id}>
-                        <td>{b._id}</td>
+                        {/* <td>{b._id}</td> */}
                         <td>{b.title}</td>
                         <td>{b.author}</td>
-                        <td>{b.ratings}</td>
                         <td>₹{b.price}</td>
                         <td>{b.stock}</td>
-                        <td>{b.genres.map((g, i) => {
+                        <td>{b.category}</td>
+                        {/* <td>{b.ratings}</td> */}
+                        {/* <td>{b.genres.map((g, i) => {
                             return <span key={i}>{g}, </span>
-                        })}</td>
+                        })}</td> */}
                         <td>
                             <div style={{ display: "flex" }}>
                                 {(isAdmin || b.createdBy === user._id) && <><button onClick={() => setEditingBook(b)}>

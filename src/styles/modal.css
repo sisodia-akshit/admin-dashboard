@@ -11,11 +11,27 @@
   background: white;
   padding: 20px;
   min-width: 300px;
-  width: fit-content;
+  width: 100%;
+  max-width: 600px;
   border-radius: 6px;
 }
 
 .close-btn {
   float: right;
   cursor: pointer;
+}
+
+.formGenre {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+.formGenreLabel {
+    display: block;
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    font-size: 12px;
+    max-width: 130px;
 }

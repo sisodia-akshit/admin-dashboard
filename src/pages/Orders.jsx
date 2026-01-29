@@ -112,7 +112,7 @@ const Orders = () => {
             <td>{o._id}</td>
             <td>{`${o.user?.name}, (${o.user?.email})`}</td>
             <td>{o.items.map((item, i) => {
-              return <span key={i}>{i + 1}. {item.title}, <br /></span>
+              return <span key={i}>{i + 1}. {item.book?.title}, <br /></span>
             })}</td>
             <td>₹{o.totalAmount}</td>
             <td>{o.status}</td>

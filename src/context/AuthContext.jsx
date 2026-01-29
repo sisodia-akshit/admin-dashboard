@@ -1,7 +1,8 @@
 import { createContext, useContext } from "react";
-import { getUser, logoutUser } from "../services/authApi";
+import { logoutUser } from "../services/authApi";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { getUser } from "../services/usersApi";
 
 const AuthContext = createContext();
 
