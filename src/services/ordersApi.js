@@ -15,25 +15,20 @@ export const getAllOrders = async ({
     order: order,
     ...(status !== "all" && { status }),
   });
-  try {
-    const res = await API.get(`orders/all`, {
-      params,
-      signal,
-    });
+  const res = await API.get(`orders/all`, {
+    params,
+    signal,
+  });
 
-    return { data: res.data.data, total: Number(res.data.total) };
-  } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to fetch");
-  }
+  return res.data;
 };
 
 export const getOrders = async ({ signal }) => {
-  try {
-    const res = await API.get(`orders`, {
-      signal,
-    });
-    return { data: res.data.data, total: Number(res.data.total) };
-  } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to fetch");
-  }
+  const res = await API.get(`orders`, { signal });
+  return res.data;
+};
+
+export const updateOrderStatus = async ({ id, status }) => {
+  const res = await API.patch(`orders/${id}`, { status });
+  return res.data;
 };
