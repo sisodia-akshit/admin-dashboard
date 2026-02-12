@@ -85,6 +85,11 @@ Netlify (Frontend)
 ![Dashboard](screenshots/dashboard.png)
 ![Users Page](screenshots/users.png)
 ![Orders Page](screenshots/orders.png)
+![Inventory Page](screenshots/inventory.png)
+![Add Inventory Page](screenshots/newInventory.png)
+![Update Item](screenshots/updateItem.png)
+![Delete Item](screenshots/delete.png)
+![Signup Page](screenshots/signup.png)
 
 ---
 
