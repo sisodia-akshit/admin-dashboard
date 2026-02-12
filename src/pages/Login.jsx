@@ -120,7 +120,8 @@ const Login = () => {
           fullWidth
           onClick={() =>
           (window.location.href =
-            "http://localhost:5000/api/auth/google?redirect=admin")
+            // "http://localhost:5000/api/auth/google?redirect=admin")
+            "https://mern-bookstore-backend-o6qf.onrender.com/api/auth/google?redirect=admin")
           }
           sx={{
             display: "flex",
