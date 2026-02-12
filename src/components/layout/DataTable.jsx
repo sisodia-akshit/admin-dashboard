@@ -75,7 +75,7 @@ function DataTable({ columns, data, sortConfig, onSort, renderRow }) {
                                             }}
                                         />
                                     }
-                                    {(!sortConfig?.key && sortConfig?.key !== col.key) &&<SortIcon
+                                    {(!sortConfig?.key && sortConfig?.key !== col.key && col?.key !== "image") && <SortIcon
                                         sx={{
                                             transition: "transform 0.2s ease",
                                             fontSize: "medium"

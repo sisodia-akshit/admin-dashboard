@@ -190,7 +190,9 @@ function CardInventoryItems() {
                                 columns={[
                                     // { label: "ID", key: "id" },
                                     // { label: "Payment", key: "payment" },
+                                    { label: "Cover", key: "image" },
                                     { label: "Book Name", key: "title" },
+                                    { label: "Author", key: "author" },
                                     { label: "Category", key: "category" },
                                     { label: "Price", key: "price" },
                                     { label: "Stock", key: "stock" },
@@ -210,7 +212,23 @@ function CardInventoryItems() {
                                     <TableRow key={i}>
                                         {/* <td>{curr._id}</td> */}
                                         {/* <td>{curr.paymentStatus}</td> */}
+                                        <TableCell sx={{ py: 2, border: 0, color: "#777" }} >
+                                            <Box
+                                                component="img"
+                                                src={curr?.coverImage}
+                                                alt="item"
+                                                sx={{
+                                                    width: 50,
+                                                    height: 50,
+                                                    objectFit: "contain",
+                                                    borderRadius: 2,
+                                                    border: "1px solid #ccc"
+
+                                                }}
+                                            />
+                                        </TableCell>
                                         <TableCell sx={{ py: 2, border: 0, color: "#777", textTransform: "capitalize" }} >{curr.title}</TableCell>
+                                        <TableCell sx={{ py: 2, border: 0, color: "#777", textTransform: "capitalize" }} >{curr.author}</TableCell>
                                         <TableCell sx={{ py: 2, border: 0, color: "#777", textTransform: "capitalize" }} >{curr.category}</TableCell>
                                         <TableCell sx={{ py: 2, border: 0, color: "#777", textTransform: "capitalize" }} >₹{curr.price}</TableCell>
                                         <TableCell sx={{ py: 2, border: 0, color: "#777", textTransform: "capitalize" }} >{curr.stock}</TableCell>

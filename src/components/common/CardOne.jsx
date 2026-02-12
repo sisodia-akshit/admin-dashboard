@@ -8,10 +8,10 @@ function CardOne({ Icon, label1, label2, value1, value2 }) {
             borderRadius: 2,
             backgroundColor: "background.paper",
             color: "text.primary",
-            // "&:hover": {
-            //     backgroundColor: "primary.main",
-            //     color: "color.hover"
-            // }
+            "&:hover": {
+                backgroundColor: "primary.main",
+                color: "color.hover"
+            }
 
         }} >
             <Box display={"flex"} padding={"15px"}>

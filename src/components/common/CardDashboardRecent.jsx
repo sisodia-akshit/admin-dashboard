@@ -2,6 +2,7 @@ import {
     Avatar, Box, Button, Toolbar, Typography, Table,
     TableCell,
     TableRow,
+    Divider,
 } from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import BookstoreLogo from "../../assets/BookstoreLogo4.png";
@@ -58,7 +59,7 @@ function CardDashboardRecent() {
         const pad = (n) => String(n).padStart(2, "0");
         const hours = d.getHours() % 12 || 12;
         const ampm = d.getHours() >= 12 ? "PM" : "AM";
-        return `${pad(d.getDate())}-${pad(d.getMonth() + 1)}-${d.getFullYear()}, ${pad(hours)}:${pad(d.getMinutes())} ${ampm}`;
+        return `${pad(d.getDate())}-${pad(d.getMonth() + 1)}-${d.getFullYear()}`;
     }
 
     if (isLoading) return <Loading />
@@ -100,76 +101,73 @@ function CardDashboardRecent() {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    justifyContent: "center"
+                    // justifyContent: "center"
                 }}
             >
                 {/* recent list goes here */}
 
-                {orders.length > 100 ?
-                    <DataTable
-                        columns={[
-                            // { label: "ID", key: "id" },
-                            // { label: "Payment", key: "payment" },
-                            { label: "Customer Name", key: "name" },
-                            { label: "Order Date", key: "createdAt" },
-                            { label: "Payment Method", key: "paymentMethod" },
-                            { label: "Tracking ID", key: "orderNumber" },
-                            { label: "Order Total", key: "totalAmount" },
-                            { label: "Action", key: null },
-                            { label: "Status", key: "orderStatus" },
-                        ]}
-                        data={orders}
-                        sortConfig={
-                            sort
-                                ? { key: sort, direction: order }
-                                : null
-                        }
-                        onSort={onSort}
-                        renderRow={(o, i) => (
-                            <TableRow key={i}>
-                                {/* <td>{o._id}</td> */}
-                                {/* <td>{o.paymentStatus}</td> */}
-                                <TableCell sx={{ py: 2, border: 0, color: "#777" }} >{o.user?.name}</TableCell>
-                                <TableCell sx={{ py: 2, border: 0, color: "#777" }} >{changDateFormate(o.createdAt)}</TableCell>
-                                <TableCell sx={{ py: 2, border: 0, color: "#777" }} >{o.paymentMethod}</TableCell>
-                                <TableCell sx={{ py: 2, border: 0, color: "#777" }} >{o.orderNumber}</TableCell>
-                                <TableCell sx={{ py: 2, border: 0, color: "#777" }} >₹{o.totalAmount}</TableCell>
-                                <TableCell sx={{ py: 2, border: 0, color: "#777" }} >
-                                    <Button
-                                        onClick={() => setSelectedOrder(o)}
-                                        sx={{
-                                            bgcolor: "background.default",
-                                            padding: "0 10px"
-                                        }}
-                                    >
-                                        View <KeyboardArrowDownIcon />
-                                    </Button>
-                                </TableCell>
-                                <TableCell sx={{ py: 2, border: 0 }} >
-                                    {o.orderStatus === "pending" && <Button sx={{ p: "0 10px", color: "#000", bgcolor: "secondary.pending", fontSize: 13, textTransform: "capitalize" }}>{o.orderStatus}</Button>}
-                                    {o.orderStatus === "confirmed" && <Button sx={{ p: "0 10px", color: "#000", bgcolor: "secondary.pending", fontSize: 13, textTransform: "capitalize" }}>{o.orderStatus}</Button>}
-                                    {o.orderStatus === "shipped" && <Button sx={{ p: "0 10px", color: "primary.main", bgcolor: "primary.alpha", fontSize: 13, textTransform: "capitalize" }}>{o.orderStatus}</Button>}
-                                    {o.orderStatus === "delivered" && <Button sx={{
-                                        p: "0 10px",
-                                        color: (theme) =>
-                                            alpha(theme.palette.success.main, 0.8),
-                                        bgcolor: (theme) =>
-                                            alpha(theme.palette.success.main, 0.15),
-                                        fontSize: 13,
-                                        textTransform: "capitalize"
-                                    }}>{o.orderStatus}</Button>}
-                                    {o.orderStatus === "cancelled" && <Button sx={{
-                                        p: "0 10px",
-                                        color: (theme) =>
-                                            alpha(theme.palette.error.main, 0.8),
-                                        bgcolor: (theme) =>
-                                            alpha(theme.palette.error.main, 0.15),
-                                        fontSize: 13,
-                                        textTransform: "capitalize"
-                                    }}>{o.orderStatus}</Button>}
-                                </TableCell>
-                            </TableRow>
-                        )} /> :
+                {orders.length > 0 ?
+                    orders.map((o, index) => {
+                        return <Box key={index} sx={{ width: "100%" }}>
+                            {o.items.map((i) => {
+                                return (
+                                    <Box sx={{ display: "flex", width: '100%', gap: 1, mt: 1, borderBottom: "1px solid #eee", pb: 1 }}>
+                                        <Box
+
+                                            component="img"
+                                            src={i.coverImage}
+                                            alt="product"
+                                            sx={{
+                                                minWidth: 50,
+                                                height: 50,
+                                                objectFit: "contain",
+                                                borderRadius: 2,
+                                                border: "1px solid #ccc"
+
+                                            }}
+                                        />
+                                        <Box sx={{ display: "flex", flexDirection: "column", width: '100%' }}>
+                                            <Typography variant="h7" sx={{ color: "color.main", textTransform: "capitalize" }}>
+                                                {i.title}
+                                            </Typography>
+                                            <Typography variant="h7" sx={{ color: "text.primary", fontWeight: 500, textTransform: "capitalize" }}>
+                                                ₹{i.price}
+                                            </Typography>
+                                        </Box>
+                                        <Box sx={{ minWidth: 70, display: "flex", flexDirection: "column",alignItems:"end",justifyContent:"space-between" }}>
+                                            <Typography variant="h7" sx={{ color: "color.main", textTransform: "capitalize", fontSize: 11 }}>
+                                                {changDateFormate(o.createdAt)}
+                                            </Typography>
+
+                                            {o.orderStatus === "pending" && <Button sx={{ p: "0 10px", color: "#000", bgcolor: "secondary.pending", fontSize: 13, textTransform: "capitalize" }}>{o.orderStatus}</Button>}
+                                            {o.orderStatus === "confirmed" && <Button sx={{ p: "0 10px", color: "#000", bgcolor: "secondary.pending", fontSize: 13, textTransform: "capitalize" }}>{o.orderStatus}</Button>}
+                                            {o.orderStatus === "shipped" && <Button sx={{ p: "0 10px", color: "primary.main", bgcolor: "primary.alpha", fontSize: 13, textTransform: "capitalize" }}>{o.orderStatus}</Button>}
+                                            {o.orderStatus === "delivered" && <Button sx={{
+                                                p: "0 10px",
+                                                color: (theme) =>
+                                                    alpha(theme.palette.success.main, 0.8),
+                                                bgcolor: (theme) =>
+                                                    alpha(theme.palette.success.main, 0.15),
+                                                fontSize: 13,
+                                                textTransform: "capitalize"
+                                            }}>{o.orderStatus}</Button>}
+                                            {o.orderStatus === "cancelled" && <Button sx={{
+                                                p: "0 10px",
+                                                color: (theme) =>
+                                                    alpha(theme.palette.error.main, 0.8),
+                                                bgcolor: (theme) =>
+                                                    alpha(theme.palette.error.main, 0.15),
+                                                fontSize: 13,
+                                                textTransform: "capitalize"
+                                            }}>{o.orderStatus}</Button>}
+                                        </Box>
+                                    </Box>
+                                )
+                            })}
+
+                        </Box>
+                    })
+                    :
 
                     <Box sx={{
                         display: "flex",

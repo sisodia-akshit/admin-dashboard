@@ -34,8 +34,8 @@ function Users() {
           gridTemplateColumns: "repeat(auto-fit,minmax(300px, 1fr))",
           gap: { md: 2, xs: 1 }
         }}>
-          <CardTwo Icon={PeopleIcon} label1={"All Customers"} label2={"Active"} label3={"In-Active"} value1={0} value2={0} value3={0} />
-          <CardTwo Icon={OrderIcon} label1={"New Customers"} label2={"Purchasing"} label3={"Abandoned Carts"} value1={0} value2={0} value3={0} />
+          <CardTwo Icon={PeopleIcon} label1={"All Customers"} label2={"Active"} label3={"In-Active"} value1={8} value2={6} value3={2} />
+          <CardTwo Icon={OrderIcon} label1={"New Customers"} label2={"Purchasing"} label3={"Abandoned Carts"} value1={2} value2={1} value3={0} />
         </Box>
 
         {/* card Users  */}

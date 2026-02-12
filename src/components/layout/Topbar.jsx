@@ -11,6 +11,7 @@ import {
 import { useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import BreadcrumbsBar from "./BreadcrumbsBar";
+import { useAuth } from "../../context/AuthContext";
 
 // const drawerWidth = 250;
 
@@ -18,6 +19,7 @@ const FULL_WIDTH = 250;
 const COLLAPSED_WIDTH = 72;
 
 function Topbar({ onMenuClick }) {
+    const { user } = useAuth();
     const theme = useTheme();
     const isCollapsed = useMediaQuery(
         theme.breakpoints.between("md", "lg")
@@ -58,7 +60,7 @@ function Topbar({ onMenuClick }) {
                 <Box>
                     <Avatar
                         alt="User"
-                        src="" // later: user profile image URL
+                        src={user?.photo ?? "https://res.cloudinary.com/dgpznnv1r/image/upload/v1768841024/books/fzyjghqjqyrztxhlzya9.webp"} // later: user profile image URL
                         sx={{
                             width: 30,
                             height: 30,

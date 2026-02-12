@@ -2,7 +2,19 @@ import { Box, Typography } from "@mui/material"
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import DotIcon from "@mui/icons-material/Circle";
 
-function CardThree({ value1, value2, value3 }) {
+function CardThree({ value1 = 55, value2 = 35, value3 = 15 }) {
+    const total = value1 + value2 + value3;
+
+    const p1 = (value1 / total) * 100;
+    const p2 = (value2 / total) * 100;
+    const p3 = (value3 / total) * 100;
+
+    const gradient = `conic-gradient(
+    #5570F1 0% ${p1}%,
+    #FFCC91 ${p1}% ${p1 + p2}%,
+    #a1aef1 ${p1 + p2}% 100%
+  )`;
+
     return (
         <Box sx={{
             borderRadius: 2,
@@ -81,58 +93,51 @@ function CardThree({ value1, value2, value3 }) {
                 </Box>
 
             </Box>
-            <Box
-                sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    m: "auto",
-                    width: "230px",
-                    height: "230px",
-                }}
-            >
-                {/* donut  */}
+            {/* donut  */}
+            <Box sx={{
+                mt: 3,
+                width: 210,
+                height: 210,
+                borderRadius: "50%",
+                background: "#F4F5FA",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                mx: "auto"
+            }}>
+                {/* color circlr  */}
                 <Box sx={{
+                    width: 170,
+                    height: 170,
+                    borderRadius: "50%",
+                    background: gradient,
                     display: "flex",
-                    justifyContent: "center",
                     alignItems: "center",
-                    bgcolor: "background.default",
-                    width: "85%",
-                    height: "85%",
-                    borderRadius: "50%"
+                    justifyContent: "center",
+                    mx: "auto",
                 }}>
-                    {/* color circlr  */}
                     <Box sx={{
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        bgcolor: "primary.main",
-                        width: "80%",
-                        height: "80%",
+                        bgcolor: "background.default",
+                        width: "75%",
+                        height: "75%",
                         borderRadius: "50%"
                     }}>
                         <Box sx={{
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                            bgcolor: "background.default",
-                            width: "75%",
-                            height: "75%",
+                            bgcolor: "background.paper",
+                            width: "70%",
+                            height: "70%",
                             borderRadius: "50%"
-                        }}>
-                            <Box sx={{
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                bgcolor: "background.paper",
-                                width: "70%",
-                                height: "70%",
-                                borderRadius: "50%"
-                            }}></Box>
-                        </Box>
+                        }}></Box>
                     </Box>
                 </Box>
             </Box>
+
         </Box>
     )
 }

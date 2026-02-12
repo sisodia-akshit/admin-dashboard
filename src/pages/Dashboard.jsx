@@ -21,18 +21,20 @@ function Dashboard() {
         display: "flex",
         flexDirection: { md: "row", xs: "column" },
         gap: { md: 2, xs: 1 },
-        height: "100%",           // 👈 REQUIRED
-        alignItems: "stretch",    // 👈 IMPORTANT
+        height: "100%",
+        alignItems: "stretch",
       }}>
         <Box sx={{
           display: "grid",
-          gridTemplateColumns: { md: "repeat(auto-fit, minmax(260px, 1fr))", xs: "repeat(auto-fit, minmax(300px, 1fr))" },
+          gridTemplateColumns: { md: "repeat(auto-fit, minmax(270px, 1fr))", xs: "repeat(auto-fit, minmax(300px, 1fr))" },
           gap: { md: 2, xs: 1 },
-          flex: 1
+          flex: 1,
+          height: "100%",
+
         }}>
-          <CardOne Icon={RevenueIcon} label1={"Sales"} label2={"Volume"} value1={0} value2={0} />
+          <CardOne Icon={RevenueIcon} label1={"Sales"} label2={"Volume"} value1={"$400.00"} value2={450} />
           <CardOne Icon={PeopleIcon} label1={"Customers"} label2={"Active"} value1={stats.totalUsers} value2={stats.totalUsers} />
-          <CardThree value1={0} value2={0} value3={0} />
+          <CardThree value1={55} value2={30} value3={15} />
           <Box
             sx={{
               display: "grid",
@@ -54,9 +56,9 @@ function Dashboard() {
         <Box sx={{
           display: "flex",
           flexDirection: "column",
-          height: "100%",
+          // height: "100%",
           // gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          minWidth: { md: "420px", xs: "310px" },
+          minWidth: { md: "340px", xs: "310px" },
           gap: { md: 2, xs: 1 },
           flex: 0.65
         }}>

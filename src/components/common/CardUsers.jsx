@@ -1,15 +1,13 @@
-import { alpha, Avatar, Box, Button, Pagination, Stack, TableCell, TableRow, Typography } from "@mui/material"
+import { alpha, Box, Button, Pagination, Stack, TableCell, TableRow, Typography } from "@mui/material"
 import UsersIcon from "@mui/icons-material/People";
 import { useUsers } from "../../hooks/useUsers";
 import Loading from "../ui/Loading";
-import { useAuth } from "../../context/AuthContext";
 import useQueryParams from "../../hooks/useQueryParams";
 import useDebounce from "../../hooks/useDebounce";
 import { useEffect } from "react";
 import DataTable from "../layout/DataTable";
 import SearchInput from "../filters/SearchInput";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import DashboardLayout from "../layout/DashboardLayout";
 
 
 
@@ -23,7 +21,7 @@ function CardUsers() {
     const sort = getParam("sort", "");
     const order = getParam("order", "");
 
-    const limit = 5;
+    const limit = 10;
 
     const debounceSearch = useDebounce(search, 500);
 
@@ -105,7 +103,7 @@ function CardUsers() {
                             columns={[
                                 // { label: "ID", key: "id" },
                                 // { label: "Payment", key: "payment" },
-                                { label: "Photo", key: "photo" },
+                                { label: "Profile", key: "image" },
                                 { label: "Name", key: "name" },
                                 // { label: "Order Date", key: "createdAt" },
                                 { label: "Email", key: "email" },
@@ -124,7 +122,22 @@ function CardUsers() {
                                 <TableRow key={i}>
                                     {/* <td>{u._id}</td> */}
                                     {/* <td>{u.paymentStatus}</td> */}
-                                    <TableCell sx={{ py: 2, border: 0, color: "#777" }} >{u.name}</TableCell>
+                                    <TableCell sx={{ py: 2, border: 0, color: "#777" }} >
+                                        <Box
+
+                                            component="img"
+                                            src={u?.photo ?? "https://res.cloudinary.com/dgpznnv1r/image/upload/v1768841024/books/fzyjghqjqyrztxhlzya9.webp"}
+                                            alt="photo"
+                                            sx={{
+                                                minWidth: 50,
+                                                height: 50,
+                                                objectFit: "contain",
+                                                borderRadius: 2,
+                                                border: "1px solid #ccc"
+
+                                            }}
+                                        />
+                                    </TableCell>
                                     <TableCell sx={{ py: 2, border: 0, color: "#777" }} >{u.name}</TableCell>
                                     {/* <TableCell sx={{ py: 2, border: 0, color: "#777" }} >{changDateFormate(u.createdAt)}</TableCell> */}
                                     <TableCell sx={{ py: 2, border: 0, color: "#777" }} >{u.email}</TableCell>

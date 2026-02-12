@@ -48,8 +48,8 @@ function Inventory() {
                     gridTemplateColumns: "repeat(auto-fit,minmax(300px, 1fr))",
                     gap: { md: 2, xs: 1 }
                 }}>
-                    <CardOne Icon={PeopleIcon} label1={"All Items"} label2={"Available"} value1={stats.totalBooks} value2={0} />
-                    <CardTwo Icon={InventoryIcon} label1={"Low Stock"} label2={"Expired"} label3={"1 Star Rating"} value1={0} value2={0} value3={0} />
+                    <CardOne Icon={PeopleIcon} label1={"All Items"} label2={"Available"} value1={stats.totalBooks} value2={8} />
+                    <CardTwo Icon={InventoryIcon} label1={"Low Stock"} label2={"N/A"} label3={"1 Star Rating"} value1={24} value2={32} value3={0} />
                 </Box>
 
                 {/* card Inventory Items  */}
