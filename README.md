@@ -88,7 +88,7 @@ Netlify (Frontend)
 ![Inventory Page](screenshots/inventory.png)
 ![Add Inventory Page](screenshots/newInventory.png)
 ![Update Item](screenshots/updateItem.png)
-![Delete Item](screenshots/delete.png)
+![Delete Item](screenshots/deleteItem.png)
 ![Signup Page](screenshots/signup.png)
 
 ---
