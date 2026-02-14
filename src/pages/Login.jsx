@@ -142,6 +142,15 @@ const Login = () => {
         <Divider>or</Divider>
 
         {/* Formm  */}
+
+        <Typography sx={{ fontSize: 15}}>Demo Account</Typography>
+        <Box  sx={{mt:-2}}>
+          <Box sx={{ display: "flex", fontSize: 12, textAlign: "left", width: "100%" }}>Email:&nbsp;<Typography sx={{ display: "flex", fontSize: 12, color: "color.light" }}>demo@bookstore.com</Typography></Box>
+          <Box sx={{ display: "flex", fontSize: 12, textAlign: "left", width: "100%" }}>
+            Pass&nbsp;:&nbsp;<Typography sx={{ display: "flex", fontSize: 12, color: "color.light" }}>Demo@1234</Typography>
+          </Box>
+        </Box>
+
         <TextField
           required
           type="email"
